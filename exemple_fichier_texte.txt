@@ -1,0 +1,64 @@
+Mise en route d'une config QGis - MySQL
+=======================================
+
+I. Pré-requis:
+
+XAMPP 
+QGIS
+HeidiSQL
+Synclinal65 Desktop
+MySQLConnector (ODBC)
+II. Paramètres de la BDD
+
+Hote: localhost
+User: root
+Pwd: aucun
+Port: 3306
+BDD: Synclinal65_A0
+
+II. Procédure
+2.1: Installer XAMPP
+2.2: Installer QGis
+2.3: Installer HeidiSQL
+2.4: Armement de la base:
+2.4.1 Lancer XAMPP (mode administrateur)
+2.4.2 Lancer HeidiSQL
+      Créer une nouvelle session appelée "Synclinal65"
+      La liste des bases apparaît
+	  Créer une nouvelle base "Synclinal65_A0"
+2.5.3: Lancer Synclinal65 Desktop
+       Administration -> Générer une base SQL -> Utiliser les paramètres de "Centre de recherche CDSC65" (liste déroulante)
+	   Lancer la reconstruction complète de la base
+2.5: Installer MySQLConnector dans le dossier racine (c:\MySQLConnector
+-> Ouvrir un terminal
+-> Installation des pilotes: Taper: 
+myodbc-installer.exe -d -a -n "MySQL ODBC 5.2 driver" -t"DRIVER=myodbc5a.dll; SETUP=myodbc5S.dll"
+
+Puis lister: myodbc-installer.exe -d -l
+Une longue liste apparait
+-> Dans "Outils d'administration" -> choisir "Sources de données 32 bits" -> onglet "Sources de données utilisateur":
+Cliquer sur [Ajouter] puis sélectionner "MySQL ODBC 5.2 ANSI Driver"
+Paramètres: 
+DataSource Name   : Synclinal65_A0
+Description: facultatif
+TCP/IP Server: localhost
+Port: 3306
+User: root
+Database: Dérouler ; la liste des bases apparaît si OK. Cliquer sur [Test]
+
+III. Utilisation avec QGis
+3.1: Importation de cavités depuis Synclinal65
+- Base de donnée -> Connexion eVis -> Dialogue "Connexion à une base de données"
+Connexion: les paramètres habituels
+Requête SQL: "SELECT * FROM cavites;" puis [Exécuter]
+Un dialogue s'ouvre: "Sélection u fichier de BDD"
+Nom de la nouvelle couche: EntreesCavites
+Coordonnées: QGis a détecté les champs Latitude et Longitude. Choisir "XLambert" et "YLambert" puis valider.
+Une console d'erreur s'affiche. L'ignorer (c'est dû aux entrées erronnées). 
+Un sélecteur de systèmes de coordonnées s'affiche.
+Rechercher dans la Liste des SCR mondiaux le système Lambert 93 (EPSG:2154 ou IGNF:LAMB93). Valider
+-> une couche graphique est créée. 
+
+IV: Installation d'extensions:
+Menu->Extension puis rechercher les extensions OpenLayers et OSM puis les installer
+
